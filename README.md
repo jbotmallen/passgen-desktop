@@ -1,12 +1,14 @@
-# Pass Gen
+![Privaulta local-first password manager and generator](public/og.png)
 
-Pass Gen is a local-first desktop password manager and password generator. It is built for people who want to keep their vault on their own device, inspect the code that handles their secrets, and avoid accounts, cloud sync, subscriptions, telemetry, and vendor-hosted storage.
+# Privaulta
 
-> Status: early test build. Pass Gen is under active development. Try it, inspect it, and report issues, but keep a mature password manager as your primary store until this project reaches a tagged stable release.
+Privaulta is a local-first desktop password manager and password generator. It is built for people who want to keep their vault on their own device, inspect the code that handles their secrets, and avoid accounts, cloud sync, subscriptions, telemetry, and vendor-hosted storage.
+
+> Status: early test build. Privaulta is under active development. Try it, inspect it, and report issues, but keep a mature password manager as your primary store until this project reaches a tagged stable release.
 
 ## Why local-first?
 
-Pass Gen stores your vault in a local encrypted SQLite database on your computer. There is no hosted account, no remote vault server, and no automatic sync service. That gives you a simple trust model:
+Privaulta stores your vault in a local encrypted SQLite database on your computer. There is no hosted account, no remote vault server, and no automatic sync service. That gives you a simple trust model:
 
 - Your passwords stay on your device.
 - Your master password is not sent to a server.
@@ -17,7 +19,7 @@ The trade-off is responsibility. If you lose the device and do not have a backup
 
 ## Open-source safety model
 
-Security software should be inspectable. Pass Gen is intended to be an open-source project so users can freely review the code and build the app themselves instead of trusting a black-box installer.
+Security software should be inspectable. Privaulta is intended to be an open-source project so users can freely review the code and build the app themselves instead of trusting a black-box installer.
 
 Useful places to inspect:
 
@@ -28,7 +30,7 @@ Useful places to inspect:
 - `src-tauri/tauri.conf.json` - desktop app identity, build config, and Content Security Policy.
 - `DISTRIBUTION.md` - release and checksum process.
 
-Important: this repository currently has no `LICENSE` file. Before public release, add an OSI-approved license such as MIT, Apache-2.0, or GPL-3.0 if you want others to have clear legal rights to use, modify, and redistribute the project. Until then, people can inspect the code, but reuse rights are not clearly granted.
+This repository is licensed under the MIT License, so users can review, use, modify, and redistribute the code under the terms in `LICENSE`.
 
 ## Features
 
@@ -45,7 +47,7 @@ Important: this repository currently has no `LICENSE` file. Before public releas
 - Clipboard copy with configurable auto-clear delay.
 - Configurable auto-lock after inactivity.
 - Brute-force throttling after repeated wrong master-password attempts.
-- Legacy JSON import for older Pass Gen-style exports.
+- Legacy JSON import for older Privaulta-style exports.
 - Strict desktop Content Security Policy through Tauri.
 
 Not included yet:
@@ -59,7 +61,7 @@ Not included yet:
 
 ## How it protects your data
 
-Pass Gen uses the Rust backend for sensitive vault operations.
+Privaulta uses the Rust backend for sensitive vault operations.
 
 - Master passwords are not stored. The app derives a vault key from the password and a per-vault salt.
 - Key derivation uses Argon2id with 64 MiB memory, 3 iterations, and 1 lane.
@@ -71,11 +73,11 @@ Pass Gen uses the Rust backend for sensitive vault operations.
 - Repeated failed unlocks are delayed, and a hard lock is recorded after enough failures.
 - Generated passwords use `crypto.getRandomValues`, not `Math.random`.
 
-Pass Gen does not protect against malware running on your machine, screen capture, keyloggers, weak master passwords, lost master passwords, or lost devices without backups.
+Privaulta does not protect against malware running on your machine, screen capture, keyloggers, weak master passwords, lost master passwords, or lost devices without backups.
 
 ## Install a release
 
-Pass Gen is a desktop app for Windows, macOS, and Linux.
+Privaulta is a desktop app for Windows, macOS, and Linux.
 
 1. Open the GitHub Releases page for this repository.
 2. Download the installer for your operating system:
@@ -83,16 +85,16 @@ Pass Gen is a desktop app for Windows, macOS, and Linux.
    - macOS: `.dmg`
    - Linux: `.AppImage`, `.deb`, or `.rpm`
 3. If the release includes `SHA256SUMS.txt`, verify the downloaded file before running it.
-4. Run the installer and launch Pass Gen.
+4. Run the installer and launch Privaulta.
 
 Example checksum commands:
 
 ```powershell
-Get-FileHash '.\Pass Gen_0.1.0_x64-setup.exe' -Algorithm SHA256
+Get-FileHash '.\Privaulta_0.1.0_x64-setup.exe' -Algorithm SHA256
 ```
 
 ```bash
-shasum -a 256 './Pass Gen_0.1.0_x64-setup.exe'
+shasum -a 256 './Privaulta_0.1.0_x64-setup.exe'
 ```
 
 Current builds are unsigned. Windows SmartScreen or macOS Gatekeeper may warn that the publisher cannot be verified. That warning means the binary is not code-signed; it is not proof that the app is malicious. If that makes you uncomfortable, build from source.
@@ -135,7 +137,7 @@ src-tauri/target/release/bundle/
 
 ## First-time use
 
-1. Launch Pass Gen.
+1. Launch Privaulta.
 2. Create a vault and choose a strong master password.
 3. Save the master password somewhere safe. There is no recovery flow.
 4. Add entries with usernames, URLs, passwords, notes, favorites, and tags.
@@ -145,31 +147,31 @@ src-tauri/target/release/bundle/
 
 ## Backups and restore
 
-Pass Gen does not sync or back up your vault automatically. Back up the local database file yourself.
+Privaulta does not sync or back up your vault automatically. Back up the local database file yourself.
 
-The app creates `passgen.db` in Tauri's app config directory. Typical locations are:
+The app creates `privaulta.db` in Tauri's app config directory. Typical locations are:
 
-- Windows: `%APPDATA%\com.passgen.desktop\passgen.db`
-- macOS: `~/Library/Application Support/com.passgen.desktop/passgen.db`
-- Linux: `~/.config/com.passgen.desktop/passgen.db`
+- Windows: `%APPDATA%\com.privaulta.desktop\privaulta.db`
+- macOS: `~/Library/Application Support/com.privaulta.desktop/privaulta.db`
+- Linux: `~/.config/com.privaulta.desktop/privaulta.db`
 
 To back up:
 
-1. Close Pass Gen.
-2. Copy `passgen.db` to an external drive, encrypted cloud folder, or other backup location.
+1. Close Privaulta.
+2. Copy `privaulta.db` to an external drive, encrypted cloud folder, or other backup location.
 3. Keep the master password separately. The database backup is useless without it.
 
 To restore:
 
-1. Install Pass Gen on the new device.
+1. Install Privaulta on the new device.
 2. Launch it once, then close it.
-3. Replace the new `passgen.db` with your backup file.
-4. Reopen Pass Gen and unlock the vault with the original master password.
+3. Replace the new `privaulta.db` with your backup file.
+4. Reopen Privaulta and unlock the vault with the original master password.
 
 ## Project layout
 
 ```text
-passgen-revamped/
+privaulta/
 |-- src/                 React + TypeScript UI
 |   |-- components/      UI, generator, dashboard, settings, vault selector
 |   |-- lib/             frontend backend wrappers, settings, importer, schemas
@@ -210,4 +212,5 @@ Open a GitHub issue for bugs, usability problems, installation trouble, or docum
 
 ## License
 
-No license file is currently present. Add a real open-source license before public release so users and contributors know exactly what they are allowed to do with the code.
+Privaulta is released under the MIT License. See `LICENSE` for the full text.
+

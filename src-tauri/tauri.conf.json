@@ -1,8 +1,8 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
-  "productName": "Pass Gen",
+  "productName": "Privaulta",
   "version": "0.1.0",
-  "identifier": "com.passgen.desktop",
+  "identifier": "com.privaulta.desktop",
   "build": {
     "frontendDist": "../dist",
     "devUrl": "http://localhost:5173",
@@ -12,7 +12,7 @@
   "app": {
     "windows": [
       {
-        "title": "Pass Gen",
+        "title": "Privaulta",
         "width": 1024,
         "height": 680,
         "minWidth": 720,
@@ -41,3 +41,4 @@
     }
   }
 }
+

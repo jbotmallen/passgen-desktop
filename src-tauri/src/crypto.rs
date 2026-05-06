@@ -14,7 +14,7 @@ use subtle::ConstantTimeEq;
 use tauri::State;
 use zeroize::Zeroize;
 
-const VAULT_SENTINEL: &[u8] = b"PASSGEN_VAULT_V1";
+const VAULT_SENTINEL: &[u8] = b"PRIVAULTA_VAULT_V1";
 const ARGON2_MEM_KIB: u32 = 65536; // 64 MiB
 const ARGON2_ITERS: u32 = 3;
 const ARGON2_PARALLELISM: u32 = 1;
@@ -243,3 +243,4 @@ mod tests {
         assert!(wrong.is_err());
     }
 }
+

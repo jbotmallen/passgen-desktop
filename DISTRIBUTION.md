@@ -1,6 +1,6 @@
-# Distribution Guide — Pass Gen
+# Distribution Guide — Privaulta
 
-Step-by-step walkthrough for producing installable bundles and publishing them so testers can download and try Pass Gen immediately.
+Step-by-step walkthrough for producing installable bundles and publishing them so testers can download and try Privaulta immediately.
 
 ---
 
@@ -22,7 +22,7 @@ Tauri can only cross-compile in limited cases — to ship Windows + macOS + Linu
 ## 2. One-time prep
 
 1. **Set a real version.** Edit `src-tauri/tauri.conf.json` (`version`) and `package.json` (`version`). Keep them in sync. Use semver — start `0.1.0` for the first public test build.
-2. **Confirm the bundle identifier.** `com.passgen.app` is fine for a personal project; change it if you fork.
+2. **Confirm the bundle identifier.** `com.privaulta.app` is fine for a personal project; change it if you fork.
 3. **Add icons** (already present under `src-tauri/icons/`). Replace if you rebrand.
 4. **(Optional) Code signing.** Unsigned builds work but trigger SmartScreen / Gatekeeper warnings.
    - Windows: an Authenticode certificate (DigiCert, SSL.com, etc., ~$200–$400/yr) avoids the "unknown publisher" warning.
@@ -42,10 +42,10 @@ npm run tauri build
 
 Outputs land in:
 
-- `src-tauri/target/release/bundle/msi/Pass Gen_0.1.0_x64_en-US.msi`
-- `src-tauri/target/release/bundle/nsis/Pass Gen_0.1.0_x64-setup.exe`
-- (macOS) `…/bundle/dmg/Pass Gen_0.1.0_aarch64.dmg`
-- (Linux) `…/bundle/appimage/pass-gen_0.1.0_amd64.AppImage`
+- `src-tauri/target/release/bundle/msi/Privaulta_0.1.0_x64_en-US.msi`
+- `src-tauri/target/release/bundle/nsis/Privaulta_0.1.0_x64-setup.exe`
+- (macOS) `…/bundle/dmg/Privaulta_0.1.0_aarch64.dmg`
+- (Linux) `…/bundle/appimage/privaulta_0.1.0_amd64.AppImage`
 
 Test the installer on a clean machine (or a fresh user account / VM) before publishing — a fresh box catches missing runtime deps the dev box hides.
 
@@ -56,12 +56,12 @@ Test the installer on a clean machine (or a fresh user account / VM) before publ
 Users (and your README) should be able to verify the download. From the directory containing the bundle:
 
 ```powershell
-Get-FileHash 'Pass Gen_0.1.0_x64-setup.exe' -Algorithm SHA256
+Get-FileHash 'Privaulta_0.1.0_x64-setup.exe' -Algorithm SHA256
 ```
 
 ```bash
 # macOS / Linux
-shasum -a 256 'Pass Gen_0.1.0_x64-setup.exe'
+shasum -a 256 'Privaulta_0.1.0_x64-setup.exe'
 ```
 
 Save the output to a `SHA256SUMS.txt` you upload alongside the binaries.
@@ -78,7 +78,7 @@ GitHub Releases is the path of least friction: free, version-pinned, public, and
    git push origin v0.1.0
    ```
 2. On GitHub: **Releases → Draft a new release → choose tag v0.1.0**.
-3. Title: `Pass Gen 0.1.0 (test build)`. Mark **"This is a pre-release"** for early test builds.
+3. Title: `Privaulta 0.1.0 (test build)`. Mark **"This is a pre-release"** for early test builds.
 4. In the description, paste:
    - One-line summary.
    - Install instructions per OS (link to README sections).
@@ -86,7 +86,7 @@ GitHub Releases is the path of least friction: free, version-pinned, public, and
    - Known issues / "this is unsigned" disclaimer.
 5. Drag-and-drop the installers + `SHA256SUMS.txt` into the asset uploader.
 6. **Publish.** Each asset gets a permalink:
-   `https://github.com/<you>/passgen-revamped/releases/download/v0.1.0/Pass-Gen_0.1.0_x64-setup.exe`
+   `https://github.com/<you>/privaulta/releases/download/v0.1.0/Privaulta_0.1.0_x64-setup.exe`
 
 Link that URL from the README's "Download" section so users land one click away from the file.
 
@@ -124,7 +124,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           tagName: ${{ github.ref_name }}
-          releaseName: 'Pass Gen ${{ github.ref_name }}'
+          releaseName: 'Privaulta ${{ github.ref_name }}'
           releaseDraft: true
           prerelease: true
 ```
@@ -170,3 +170,4 @@ Before clicking **Publish**:
 - [ ] SHA-256 hashes recorded.
 - [ ] README "Download" link points at the new release tag.
 - [ ] Release notes mention: this is unsigned (if true), data is local-only, how to uninstall, where the database lives.
+

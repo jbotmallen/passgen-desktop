@@ -14,7 +14,7 @@ pub struct DbState {
 pub async fn connect(app: &AppHandle) -> Result<DbState, Box<dyn std::error::Error>> {
     let dir = app.path().app_config_dir()?;
     fs::create_dir_all(&dir)?;
-    let url = format!("sqlite:{}", dir.join("passgen.db").to_string_lossy());
+    let url = format!("sqlite:{}", dir.join("privaulta.db").to_string_lossy());
     let options = SqliteConnectOptions::from_str(&url)?
         .create_if_missing(true)
         .foreign_keys(true);
@@ -156,7 +156,7 @@ fn strength(password: &str) -> &'static str {
 }
 
 fn entry_aad(vault_id: &str, entry_id: &str, field: &str) -> Vec<u8> {
-    format!("passgen:v1:vault:{vault_id}:entry:{entry_id}:field:{field}").into_bytes()
+    format!("privaulta:v1:vault:{vault_id}:entry:{entry_id}:field:{field}").into_bytes()
 }
 
 async fn ensure_settings_schema(pool: &SqlitePool) -> Result<(), String> {
@@ -697,3 +697,4 @@ pub async fn clear_attempts(db: State<'_, DbState>, vault_id: String) -> Result<
         .map_err(|e| e.to_string())?;
     Ok(())
 }
+
