@@ -1,0 +1,237 @@
+@import "tailwindcss";
+@config "../tailwind.config.js";
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+
+    --radius: 0.5rem;
+  }
+
+  /* We force dark mode for Pass Gen */
+  .dark, body {
+    --background: 0 0% 5%;
+    --foreground: 210 40% 98%;
+
+    --card: 0 0% 7%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 0 0% 7%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 40 89% 67%; /* #F5C563 Gold */
+    --primary-foreground: 0 0% 5%;
+
+    --secondary: 0 0% 10%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 0 0% 12%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 0 0% 15%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 0 0% 15%;
+    --input: 0 0% 15%;
+    --ring: 40 89% 67%;
+  }
+}
+
+@layer base {
+  * {
+    border-color: hsl(var(--border));
+    scrollbar-color: hsl(var(--border)) #0a0a0a;
+    scrollbar-width: thin;
+  }
+
+  *::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  *::-webkit-scrollbar-track {
+    background: #0a0a0a;
+    border-radius: 999px;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background: hsl(var(--border));
+    border: 2px solid #0a0a0a;
+    border-radius: 999px;
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background: hsl(var(--primary) / 0.75);
+  }
+
+  *::-webkit-scrollbar-corner {
+    background: #0a0a0a;
+  }
+
+  body {
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-feature-settings: "rlig" 1, "calt" 1;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body.prod-mode {
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  body.prod-mode input, body.prod-mode textarea {
+    user-select: text;
+    -webkit-user-select: text;
+  }
+}
+
+/* shadcn/radix animation utilities */
+@keyframes animate-in-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes animate-out-fade {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+@keyframes animate-in-zoom {
+  from { transform: translate(-50%, -50%) scale(0.95); }
+  to { transform: translate(-50%, -50%) scale(1); }
+}
+@keyframes animate-out-zoom {
+  from { transform: translate(-50%, -50%) scale(1); }
+  to { transform: translate(-50%, -50%) scale(0.95); }
+}
+@keyframes settings-select-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+@keyframes settings-select-out {
+  from {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.98);
+  }
+}
+
+.settings-select-menu {
+  animation: settings-select-in 150ms cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: top right;
+}
+
+.settings-select-menu--closing {
+  animation: settings-select-out 120ms ease-in forwards;
+}
+
+[data-state="open"][data-radix-dialog-overlay] {
+  animation: animate-in-fade 200ms ease-out;
+}
+[data-state="closed"][data-radix-dialog-overlay] {
+  animation: animate-out-fade 200ms ease-in;
+}
+[data-state="open"][data-radix-dialog-content] {
+  animation: animate-in-fade 200ms ease-out, animate-in-zoom 200ms ease-out;
+}
+[data-state="closed"][data-radix-dialog-content] {
+  animation: animate-out-fade 200ms ease-in, animate-out-zoom 200ms ease-in;
+}
+
+/* Beveled Chip Card Styling */
+.chip-card {
+  background: linear-gradient(135deg, hsl(var(--card)) 0%, #0a0a0a 100%);
+  border: 1px solid hsl(var(--border));
+  clip-path: polygon(
+    12px 0%, 
+    calc(100% - 12px) 0%, 
+    100% 12px, 
+    100% calc(100% - 12px), 
+    calc(100% - 12px) 100%, 
+    12px 100%, 
+    0% calc(100% - 12px), 
+    0% 12px
+  );
+  transition: all 0.3s ease;
+}
+
+.chip-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(rgba(245, 197, 99, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245, 197, 99, 0.03) 1px, transparent 1px);
+  background-size: 24px 24px;
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.chip-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border: 1px solid rgba(245, 197, 99, 0.1);
+  clip-path: polygon(
+    12px 0%, 
+    calc(100% - 12px) 0%, 
+    100% 12px, 
+    100% calc(100% - 12px), 
+    calc(100% - 12px) 100%, 
+    12px 100%, 
+    0% calc(100% - 12px), 
+    0% 12px
+  );
+  pointer-events: none;
+}
+
+.chip-card:hover {
+  border-color: hsl(var(--primary) / 0.5);
+  box-shadow: 0 0 20px hsla(var(--primary) / 0.1);
+}
+
+.chip-card-inner {
+  position: relative;
+  z-index: 1;
+}
